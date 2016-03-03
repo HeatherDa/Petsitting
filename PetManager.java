@@ -17,22 +17,25 @@ public class PetManager {
             String name = scan.nextLine();
             System.out.println("What kind of animal is it?");
             String type = scan.nextLine();
-            System.out.println("What is the address where the animal lives?");
+            System.out.println("What is the address where the pet lives?");
             String address = scan.nextLine();
             Pet n=new Pet(name, type, address);
+            n.addDay();
             petlist.add(n);
         }
         for(Pet name:petlist){//go through once per pet object
-            name.addDay();
             HashMap<String, Integer>sch=name.getvperday();//get schedule for this pet
             for (String d:daylist){ //get a day of the week
-                if (sch.containsKey(d)){//if that day is applicable to this pet
+                if ((sch.containsKey(d))&&(sch.get(d)>0)){//if that day is applicable to this pet
                     ArrayList<String>val=new ArrayList<>();
                     if (printday.containsKey(d)){//if the day is in printday already
                         val=printday.get(d);//get arraylist of strings to print for this day
-                        val.add(name.writePetInfo(sch.get(d)));//add string with visit schedule for this pet on this day
-                        printday.put(d,val);
-
+                        if (val.size()<6) {//if there are fewer than 6 visits planned
+                            val.add(name.writePetInfo(sch.get(d)));//add string with visit schedule for this pet on this day
+                            printday.put(d, val);
+                        }else{//if there are already 6 visits planned
+                            System.out.println("Scheduled for "+d+" is full.  No room for "+name.getname()+".");
+                        }
                     }else{//if the day is not in the print schedule yet
                         val.add(name.writePetInfo(sch.get(d)));
                         printday.put(d,val);
@@ -42,7 +45,7 @@ public class PetManager {
                 }
             }
         }for(String day:daylist) {//day of the week
-            System.out.print(day+": \n");
+            System.out.print("\n"+day+": \n");
             for (String i : printday.get(day)) {//item in array for that day of the week
                 System.out.print("\t"+i+"\n");//print each line in array
 

@@ -28,15 +28,16 @@ public class Pet {
         for(String aday:days) {
             System.out.println("How many visits are needed for " + this.name + " on " + aday);//elicit information about visits
             int visits=scanint.nextInt();
-            if ((tvperday.containsKey(aday)) && (tvperday.get(aday) < 7)) {//if another pet is being visited on the same day
-                this.vperday.put(aday, visits); //update the information for this day
-                tvperday.put(aday, (tvperday.get(aday) + 1));//add a visit to the total for this day
-            }
-            else if ((tvperday.containsKey(aday))&&(tvperday.get(aday)>=6)){
-                System.out.println(aday+" is already full.");
-            }else {
-                this.vperday.put(aday, visits);//update information for this pet on this day
-                tvperday.put(aday,1);//add this day to hash if there is no entry
+            if (visits>0) {
+                if ((tvperday.containsKey(aday)) && (tvperday.get(aday) < 6)) {//if another pet is being visited on the same day
+                    this.vperday.put(aday, visits); //update the information for this day
+                    tvperday.put(aday, (tvperday.get(aday) + 1));//add a visit to the total for this day
+                } else if ((tvperday.containsKey(aday)) && (tvperday.get(aday) >= 6)) {
+                    System.out.println(aday + " is already full.");
+                } else {
+                    this.vperday.put(aday, visits);//update information for this pet on this day
+                    tvperday.put(aday, 1);//add this day to hash if there is no entry
+                }
             }
         }
     }
@@ -55,5 +56,9 @@ public class Pet {
 
     public HashMap<String, Integer> getvperday() {
         return this.vperday;
+    }
+
+    public String getname() {
+        return this.name;
     }
 }
