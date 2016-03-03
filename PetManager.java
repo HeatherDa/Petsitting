@@ -41,8 +41,13 @@ public class PetManager {
 
                 }
             }
-        }
+        }for(String day:daylist) {//day of the week
+            System.out.print(day+": \n");
+            for (String i : printday.get(day)) {//item in array for that day of the week
+                System.out.print("\t"+i+"\n");//print each line in array
 
+            }
+        }
 
     }
 }
